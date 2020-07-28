@@ -23,3 +23,26 @@ This library allows you to get information from the grill, to poll this data on 
 * Grill is low on pellets
 * Grill is done cooling off and ready to be turned off
 
+
+## Usage
+
+```
+    grill := gmg.NewGrill(addr+":"+port,"5m") //5m debounce between event triggering ie on low pellet alarn, don't trigger event again for 5 minutes
+    
+    grill.GetId() //serial number fetch
+     
+    grill.GetInfo() // all other settings
+    
+    grill.Poll("5s") //duration of polling otherwise GetInfo is only run manually
+    
+    //register callback when an event fires
+
+    grill.Event("grill.ready",func(g *gmg.Grill)(error){
+        
+        log.Println("Grill Ready")
+        return nil
+    })
+    
+    
+
+```
