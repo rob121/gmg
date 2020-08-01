@@ -141,21 +141,21 @@ func (g *Grill) stateCheck(){
 
     }
     
-    if( g.Info.CurrentGrillTemp >= 150 && g.Info.DesiredGrillTemp < 155 && g.internal.readyReached.Add(g.internal.tempEventDebounceRegular).Before(time.Now()) ){
+    if( g.Info.On==true && g.Info.CurrentGrillTemp >= 150 && g.Info.DesiredGrillTemp < 155 && g.internal.readyReached.Add(g.internal.tempEventDebounceRegular).Before(time.Now()) ){
         
          g.internal.readyReached = time.Now()
          g.internal.event.Go("grill.ready",g)
 
     }
     
-    if(g.Info.CurrentProbe1Temp >= g.Info.DesiredProbe1Temp && g.Info.CurrentProbe1Temp > 0 && g.Info.DesiredProbe1Temp > 0 && g.internal.probe1LastReached.Add(g.internal.tempEventDebounce).Before(time.Now()) ){
+    if( g.Info.On==true && g.Info.CurrentProbe1Temp >= g.Info.DesiredProbe1Temp && g.Info.CurrentProbe1Temp > 0 && g.Info.DesiredProbe1Temp > 0 && g.internal.probe1LastReached.Add(g.internal.tempEventDebounce).Before(time.Now()) ){
         
         g.internal.probe1LastReached = time.Now()
         g.internal.event.Go("grill.probe1.temp.reached",g)
         
     }  
     
-    if(g.Info.CurrentProbe2Temp >= g.Info.DesiredProbe2Temp && g.Info.CurrentProbe2Temp > 0 && g.Info.DesiredProbe2Temp > 0 && g.internal.probe2LastReached.Add(g.internal.tempEventDebounce).Before(time.Now()) ){
+    if(g.Info.On==true && g.Info.CurrentProbe2Temp >= g.Info.DesiredProbe2Temp && g.Info.CurrentProbe2Temp > 0 && g.Info.DesiredProbe2Temp > 0 && g.internal.probe2LastReached.Add(g.internal.tempEventDebounce).Before(time.Now()) ){
         
          g.internal.probe2LastReached = time.Now()
          g.internal.event.Go("grill.probe2.temp.reached",g)
@@ -163,7 +163,7 @@ func (g *Grill) stateCheck(){
         
     }  
     
-    if(g.Info.PelletsLow == true && g.internal.pelletsLowReached.Add(g.internal.tempEventDebounce).Before(time.Now()) ){
+    if(g.Info.On==true && g.Info.PelletsLow == true && g.internal.pelletsLowReached.Add(g.internal.tempEventDebounce).Before(time.Now()) ){
         
          g.internal.pelletsLowReached = time.Now()
          g.internal.event.Go("grill.pellets.low",g)
