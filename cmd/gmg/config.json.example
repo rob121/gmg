@@ -1,0 +1,10 @@
+{
+  "event": {
+    "grill_ready": "",
+    "main_temp_reached": "",
+    "probe1_temp_reached": "",
+    "probe2_temp_reached": "",
+    "pellets_low": "",
+    "cooldown_complete": ""
+  }
+}
