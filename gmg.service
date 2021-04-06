@@ -1,0 +1,16 @@
+[Unit]
+Description=Green mountain grill Service
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/gmg.conf
+ExecStart=/usr/local/bin/gmg --address=$GMG_ADDRESS
+Restart=always
+RestartSec=5
+StartLimitInterval=0
+StartLimitBurst=3
+
+
+[Install]
+WantedBy=multi-user.target
