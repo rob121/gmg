@@ -8,18 +8,25 @@ import (
     "time"
     "flag"
     "github.com/davecgh/go-spew/spew"
+    "github.com/spf13/viper"
     "net/http"
 )
 
-
+var grill *gmg.Grill
 var port string
+var conf *viper.Viper
+var page_port string
 var addr string
+var assets_dir string
 
 func main() {
 
     vhelp.Load("config")
+    var err error
 
-    conf,err := vhelp.Get("config")
+    conf,err = vhelp.Get("config")
+
+    conf.SetDefault("page_port","8712")
 
     if(err!=nil){
 
@@ -34,8 +41,10 @@ func main() {
 
         log.Fatal("Address required")
     }
+
+    go startHTTPServer()
     
-    grill := gmg.NewGrill(addr+":"+port,"5m")
+    grill = gmg.NewGrill(addr+":"+port,"5m")
     
     grill.GetId()
     
@@ -110,6 +119,8 @@ func main() {
     for _ = range ticker.C {
     spew.Dump(grill.Info)
     }
+
+
     
     
 }
